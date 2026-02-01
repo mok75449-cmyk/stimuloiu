@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stimulus Relief Portal - Official Check</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* --- 1. RESET & VARIABLES --- */
+        :root {
+            --primary-navy: #0f172a;
+            --primary-blue: #2563eb;
+            --accent-red: #dc2626;
+            --accent-red-hover: #b91c1c;
+            --bg-light: #f1f5f9;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            padding-bottom: 80px; /* Space for sticky footer */
+        }
+
+        a { text-decoration: none; transition: 0.3s; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- 2. HEADER --- */
+        header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo i { color: var(--primary-blue); }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #059669;
+            font-weight: 600;
+            background: #ecfdf5;
+            padding: 5px 10px;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 40px 0 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Live Badge */
+        .live-badge {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            color: #fca5a5;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .blink-dot {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+            box-shadow: 0 0 5px #ef4444;
+        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        /* Video Wrapper */
+        .video-wrapper {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: #ffffff; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            font-weight: 300;
+            padding: 0 10px;
+        }
+
+        /* Timer */
+        .timer-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            display: inline-flex;
+            gap: 20px;
+            padding: 15px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .time-unit { text-align: center; min-width: 60px; }
+        .time-val { display: block; font-size: 2rem; font-weight: 700; color: white; line-height: 1; }
+        .time-lbl { font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; margin-top: 5px; letter-spacing: 1px; }
+
+        /* CTA Button */
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-red);
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 20px 48px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.5);
+            animation: pulse-red 2s infinite;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .btn-main:hover {
+            transform: translateY(-2px);
+            background: var(--accent-red-hover);
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(220, 38, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+
+        /* --- 4. FEATURES GRID (Was "Review Section") --- */
+        .features-section {
+            padding: 40px 0 20px 0;
+            margin-top: -30px; /* Slight overlap for style */
+            position: relative;
+            z-index: 10;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border-top: 4px solid transparent;
+            transition: transform 0.3s ease;
+            text-align: left;
+        }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-card.highlight { border-top-color: var(--accent-red); }
+        .feature-card.standard { border-top-color: var(--primary-blue); }
+        
+        .feature-card h3 { 
+            font-size: 1.35rem; 
+            color: var(--primary-navy); 
+            margin-bottom: 12px; 
+            font-weight: 700; 
+        }
+        .feature-card p { 
+            color: var(--text-gray); 
+            font-size: 1rem; 
+        }
+
+        /* --- 5. INTERACTIVE SECTION (FAQ & FEED) --- */
+        .interactive-section { padding: 40px 0 80px 0; }
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        /* FAQ Accordion */
+        .question-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+        .q-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--primary-navy); }
+        .q-answer { 
+            max-height: 0;
+            overflow: hidden; transition: max-height 0.3s ease; 
+            color: var(--text-gray); font-size: 0.9rem; margin-top: 0;
+        }
+        .question-item.active .q-answer { max-height: 150px; margin-top: 15px; }
+        .question-item.active .fa-plus { transform: rotate(45deg); transition: transform 0.3s; }
+
+        /* Live Feed */
+        .live-feed-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid #e2e8f0;
+        }
+        .feed-header {
+            font-weight: 700; color: var(--primary-navy); margin-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .live-dot-sm { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        
+        .live-feed-container {
+            height: 350px;
+            overflow-y: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        .feed-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 60px;
+            background: linear-gradient(to bottom, #f8fafc 0%, rgba(248,250,252,0) 100%);
+            z-index: 5; pointer-events: none;
+        }
+        .feed-scroll-area {
+            display: flex; flex-direction: column; gap: 12px;
+            overflow-y: auto; scroll-behavior: smooth; padding: 20px 15px;
+        }
+        .feed-scroll-area::-webkit-scrollbar { display: none; }
+        
+        .review-bubble {
+            display: flex; gap: 10px;
+            animation: slideIn 0.4s ease-out;
+            opacity: 0.95;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .rv-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            color: white; font-weight: 700; font-size: 0.75rem;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; text-transform: uppercase;
+        }
+        .rv-content {
+            background: white; padding: 10px 14px;
+            border-radius: 14px; border-top-left-radius: 2px;
+            font-size: 0.85rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .rv-name { font-weight: 700; font-size: 0.75rem; color: var(--primary-navy); margin-bottom: 2px; }
+        .rv-text { color: var(--text-dark); line-height: 1.3; }
+        .rv-time { font-size: 0.65rem; color: #94a3b8; margin-top: 4px; display: block; }
+
+        .input-area { display: flex; gap: 8px; margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; }
+        .live-input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; }
+        .send-btn { background: var(--primary-blue); color: white; border: none; width: 40px; border-radius: 8px; cursor: pointer; }
+
+        /* --- 6. STICKY FOOTER --- */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: white; padding: 12px 20px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+            display: none; 
+            justify-content: center;
+            z-index: 999;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        /* --- 7. TOAST NOTIFICATION --- */
+        .toast {
+            position: fixed; top: 15px; right: 15px;
+            background: rgba(15, 23, 42, 0.95); color: white;
+            padding: 12px 20px; border-radius: 8px;
+            font-size: 0.8rem; display: flex; align-items: center; gap: 12px;
+            transform: translateX(150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1001; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .toast.show { transform: translateX(0); }
+
+        /* --- FOOTER --- */
+        footer {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 60px 0 80px 0; 
+            text-align: center;
+            color: var(--text-gray);
+        }
+        .footer-links { margin-bottom: 24px; }
+        .footer-links a { color: var(--text-dark); margin: 0 15px; font-weight: 600; font-size: 0.9rem; }
+        .disclaimer { font-size: 0.8rem; max-width: 800px; margin: 0 auto; color: #94a3b8; padding: 0 10px; }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .sticky-footer { display: flex; }
+            .two-col-grid { grid-template-columns: 1fr; gap: 30px; }
+            .container { padding: 0 15px; }
+            .hero { padding: 40px 0 60px 0; }
+            .hero h1 { font-size: 2.2rem; line-height: 1.2; }
+            .timer-wrapper { width: 100%; justify-content: space-between; gap: 5px; padding: 15px 10px; }
+            .time-val { font-size: 1.5rem; }
+            .time-lbl { font-size: 0.65rem; }
+            .cards-grid { grid-template-columns: 1fr; gap: 20px; }
+            .features-section { margin-top: 0; padding: 30px 0; }
+            .interactive-section { padding: 30px 0; }
+            .video-wrapper { max-width: 100%; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-check-circle" style="color: #22c55e; font-size: 1.2rem;"></i>
+        <div id="toast-text">User qualified for funds</div>
+    </div>
+
+    <div class="sticky-footer">
+        <button class="btn-main" style="padding: 12px; font-size: 1rem; width: 100%; max-width: 400px; margin: 0;" onclick="window.location.href='https://glctrk.org/aff_c?offer_id=2557&aff_id=7853'">
+            Check Eligibility Now
+        </button>
+    </div>
+
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">
+                <i class="fas fa-landmark"></i> ApplyStimulus
+            </div>
+            <div class="secure-badge">
+                <i class="fas fa-lock"></i> 256-Bit Secure
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="live-badge">
+                <div class="blink-dot"></div>
+                LIVE: <span id="viewer-count">1,204</span> Citizens Viewing
+            </div>
+
+            <div class="video-wrapper">
+                <div style="padding:56.25% 0 0 0;position:relative;">
+                    <iframe src="https://player.vimeo.com/video/1160597722?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                            title="Stimulus Update">
+                    </iframe>
+                </div>
+            </div>
+            <script src="https://player.vimeo.com/api/player.js"></script>
+            
+            <h1>Check Your Eligibility For <br><span style="color: #60a5fa;">$5,000 Stimulus Relief</span></h1>
+            <p>New financial avenues have opened under the 2026 CARES Act extension. Funding distributed first-come, first-served.</p>
+
+            <div class="timer-wrapper">
+                <div class="time-unit">
+                    <span class="time-val" id="days">00</span>
+                    <div class="time-lbl">Days</div>
+                </div>
+                <div class="time-unit">
+                    <span class="time-val" id="hours">17</span>
+                    <div class="time-lbl">Hours</div>
+                </div>
+                <div class="time-unit">
+                    <span class="time-val" id="mins">16</span>
+                    <div class="time-lbl">Mins</div>
+                </div>
+                <div class="time-unit">
+                    <span class="time-val" id="secs" style="color: #fca5a5;">33</span>
+                    <div class="time-lbl">Secs</div>
+                </div>
+            </div>
+
+            <div>
+                <a href="https://glctrk.org/aff_c?offer_id=2557&aff_id=7853" class="btn-main">
+                    Check Eligibility Now <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                </a>
+                <p style="font-size: 0.85rem; margin-top: 15px; opacity: 0.6;">No Social Security Number Required for Initial Check</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container features-section">
+        <div class="cards-grid">
+            <div class="feature-card highlight">
+                <div style="color: var(--accent-red); font-size: 2rem; margin-bottom: 15px;"><i class="fas fa-bolt"></i></div>
+                <h3>Quick 2-Minute Check</h3>
+                <p>Skip the paperwork. Our AI-driven system checks your status against the latest government databases instantly.</p>
+            </div>
+            <div class="feature-card standard">
+                <div style="color: var(--primary-blue); font-size: 2rem; margin-bottom: 15px;"><i class="fas fa-calendar-check"></i></div>
+                <h3>Deadline Approaching</h3>
+                <p>Funding is limited and distributed on a first-come, first-served basis. Don't leave your potential claim unclaimed.</p>
+            </div>
+            <div class="feature-card standard">
+                <div style="color: #059669; font-size: 2rem; margin-bottom: 15px;"><i class="fas fa-shield-alt"></i></div>
+                <h3>Bank-Level Security</h3>
+                <p>Your data is encrypted with 256-bit SSL technology. We never sell your personal information to third parties.</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="interactive-section">
+        <div class="container">
+            <h2 style="text-align: center; color: var(--primary-navy); font-size: 2rem; font-weight: 800; margin-bottom: 10px;">Common Questions & Recent Activity</h2>
+            <p style="text-align: center; color: var(--text-gray); margin-bottom: 30px;">See what others are asking and track real-time approvals.</p>
+
+            <div class="two-col-grid">
+                <div class="faq-container">
+                    <div class="question-item" onclick="toggleAnswer(this)">
+                        <div class="q-header">
+                            <span>Do I need to be unemployed?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="q-answer">
+                            No. These relief programs are available to employed, self-employed, and gig workers (Uber, Lyft, etc.) based on income brackets.
+                        </div>
+                    </div>
+
+                    <div class="question-item" onclick="toggleAnswer(this)">
+                        <div class="q-header">
+                            <span>How fast is the deposit?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="q-answer">
+                            Once approved, direct deposits typically arrive within 24-48 hours depending on your bank.
+                        </div>
+                    </div>
+
+                    <div class="question-item" onclick="toggleAnswer(this)">
+                        <div class="q-header">
+                            <span>Is this a loan?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="q-answer">
+                            Most relief programs listed are grants or credits that do not require repayment if you meet the qualification criteria.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item" onclick="toggleAnswer(this)">
+                        <div class="q-header">
+                            <span>Does it affect my credit score?</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="q-answer">
+                            Checking your eligibility uses a "soft pull" or no pull at all, meaning it does not impact your credit score.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="live-feed-card">
+                    <div class="feed-header">
+                        <span>Applicant Status Feed</span>
+                        <span style="font-size: 0.8rem; color: #22c55e; background: #ecfdf5; padding: 4px 8px; border-radius: 12px;"><span class="live-dot-sm"></span>Live</span>
+                    </div>
+                    
+                    <div class="live-feed-container">
+                        <div class="feed-overlay"></div>
+                        <div class="feed-scroll-area" id="feedArea">
+                            </div>
+                    </div>
+
+                    <div class="input-area">
+                        <input type="text" id="userComment" class="live-input" placeholder="Ask a question...">
+                        <button class="send-btn" onclick="postUserComment()"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 20px; font-size: 1.2rem; opacity: 0.8;">
+                <i class="fas fa-landmark"></i> ApplyStimulus
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Contact Support</a>
+                <a href="#">Unsubscribe</a>
+            </div>
+            <p class="disclaimer">
+                This website is a private information service and is not directly affiliated with the U.S. Government or the IRS. 
+                "Stimulus" refers to potential eligibility for various financial relief programs. Actual amounts vary based on individual circumstances.
+            </p>
+            <p style="margin-top: 20px; font-size: 0.8rem;">&copy; 2026 ApplyStimulus. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. TIMER LOGIC ---
+        const duration = (17 * 60 * 60) + (16 * 60) + 33; 
+        let remainingTime = duration;
+
+        function updateTimer() {
+            const hours = Math.floor(remainingTime / 3600);
+            const mins = Math.floor((remainingTime % 3600) / 60);
+            const secs = remainingTime % 60;
+
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('mins').innerText = mins < 10 ? '0' + mins : mins;
+            document.getElementById('secs').innerText = secs < 10 ? '0' + secs : secs;
+
+            if (remainingTime > 0) {
+                remainingTime--;
+            } else {
+                remainingTime = duration; 
+            }
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // --- 2. FAQ TOGGLE ---
+        function toggleAnswer(element) {
+            element.classList.toggle('active');
+        }
+
+        // --- 3. LIVE FEED LOGIC ---
+        const feedArea = document.getElementById('feedArea');
+        const colors = ['#3b5998', '#1e293b', '#2563eb', '#059669', '#475569'];
+        
+        const reviewDatabase = [
+            "Just checked and I actually qualified for the $5200 bracket. Thank you!",
+            "Is this for 1099 workers too?",
+            "Yes, I do DoorDash and I qualified. It's legitimate.",
+            "Deposited hit my Chime account this morning. 🙏",
+            "Took about 3 mins to fill out the form. Waiting on approval now.",
+            "My sister in Texas just got hers.",
+            "I thought the deadline passed?",
+            "No, they extended it for 2026 tax filing.",
+            "Approved! It says funds will arrive in 48 hours.",
+            "I had to verify my email twice but it worked.",
+            "Rent is paid for the next 3 months. Im crying.",
+            "Can I apply if I'm currently unemployed?",
+            "Yeah that's the whole point, check the first box.",
+            "Just got the confirmation email. Easy.",
+            "Florida residents are definitely eligible, I just did it.",
+            "Anyone from California get approved?",
+            "Yes, CA approved here. Took 5 mins.",
+            "Make sure you use your real zip code or it declines.",
+            "Money secured. Paying off credit cards today.",
+            "Is there a fee?",
+            "No fee to check eligibility.",
+            "Checking for my mom now.",
+            "Confirmed working in NY.",
+            "Thank you for the info!",
+            "Finally some relief for small business owners."
+        ];
+
+        const names = [
+            "Jordan S.", "Michael P.", "Sarah J.", "Ashley T.", "John M.", 
+            "Emily R.", "David K.", "Jessica W.", "Chris B.", "Amanda G.",
+            "Robert L.", "Latoya J.", "Maria G.", "Jose R.", "Bella C.",
+            "Sophie L.", "Ethan M.", "Olivia P.", "Liam N."
+        ];
+
+        function createReviewElement(name, text, isUser = false) {
+            const div = document.createElement('div');
+            div.className = 'review-bubble';
+            
+            let initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+            let color = isUser ? '#000' : colors[Math.floor(Math.random() * colors.length)];
+            
+            div.innerHTML = `
+                <div class="rv-avatar" style="background: ${color}">${initials}</div>
+                <div class="rv-content">
+                    <div class="rv-name">${name}</div>
+                    <div class="rv-text">${text}</div>
+                    <span class="rv-time">Just now</span>
+                </div>
+            `;
+            return div;
+        }
+
+        function addReviewToFeed(name, text) {
+            const review = createReviewElement(name, text);
+            feedArea.appendChild(review);
+            feedArea.scrollTop = feedArea.scrollHeight;
+            if (feedArea.children.length > 30) {
+                feedArea.removeChild(feedArea.firstChild);
+            }
+        }
+
+        let reviewIndex = 0;
+        function scheduleNextReview() {
+            const delay = Math.floor(Math.random() * 3000) + 1500;
+            setTimeout(() => {
+                const text = reviewDatabase[reviewIndex % reviewDatabase.length];
+                const name = names[Math.floor(Math.random() * names.length)];
+                addReviewToFeed(name, text);
+                reviewIndex++;
+                scheduleNextReview();
+            }, delay);
+        }
+
+        // Initialize Feed
+        addReviewToFeed("System", "New funding block released: 09:30 AM EST");
+        addReviewToFeed("Sarah J.", "Just checked and I actually qualified for the $5200 bracket.");
+        addReviewToFeed("Michael P.", "Is this for 1099 workers too?");
+        scheduleNextReview();
+
+        function postUserComment() {
+            const input = document.getElementById('userComment');
+            const text = input.value.trim();
+            if (text) {
+                addReviewToFeed("You", text, true);
+                input.value = "";
+                setTimeout(() => {
+                    addReviewToFeed("Support Bot", "Thanks for your question! Please complete the eligibility check to see your specific options.");
+                }, 2000);
+            }
+        }
+
+        // --- 4. VIEWER COUNT & TOASTS ---
+        const viewerCountEl = document.getElementById('viewer-count');
+        let viewers = 1204;
+
+        setInterval(() => {
+            const change = Math.floor(Math.random() * 10) - 3; 
+            viewers += change;
+            viewerCountEl.innerText = viewers.toLocaleString();
+        }, 4000);
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toast-text');
+            const states = ["TX", "FL", "NY", "CA", "OH", "IL", "PA", "GA"];
+            const state = states[Math.floor(Math.random() * states.length)];
+            const user = names[Math.floor(Math.random() * names.length)].split(' ')[0];
+            const amounts = ["$2,400", "$5,200", "$1,800", "$3,600"];
+            const amount = amounts[Math.floor(Math.random() * amounts.length)];
+            
+            toastText.innerHTML = `<strong>${user}</strong> (in ${state}) qualified for <strong>${amount}</strong>`;
+            
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 4000);
+        }
+
+        setInterval(showToast, 7000);
+
+    </script>
+</body>
+</html>
